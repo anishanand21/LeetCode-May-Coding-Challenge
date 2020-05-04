@@ -1,0 +1,30 @@
+class Solution {
+public:
+    bool canConstruct(string ransomNote, string magazine) 
+    {
+        int n1 = magazine.size(); 
+        int n2 = ransomNote.size(); 
+  
+    // hash-table to store count 
+    unordered_map<int, int> mp; 
+  
+    // store count of each character 
+    for (int i = 0; i < n1; i++) { 
+        mp[magazine[i]]++; 
+    } 
+  
+    // traverse and check for every character 
+    for (int i = 0; i < n2; i++) { 
+  
+        // if the character of s2 is present in s1 
+        if (mp[ransomNote[i]]) { 
+            mp[ransomNote[i]]--; 
+        }
+        else { 
+            return false; 
+        } 
+    } 
+  
+   return true; 
+    }
+};
