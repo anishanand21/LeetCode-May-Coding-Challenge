@@ -1,0 +1,41 @@
+//Input: num = "1432219", k = 3
+//Output: "1219"
+//Explanation: Remove the three digits 4, 3, and 2 to form the new number 1219 which is the smallest.
+
+//Solution using stack-
+class Solution {
+public:
+    string removeKdigits(string num, int k) {
+        stack<char> ans;
+        for (char i : num) {
+		
+			// pop digits while k is still left to maintain an increasing stack
+			// these popped digits are the ones which are removed from answer
+            while (k and !ans.empty() and i < ans.top()) {
+                ans.pop();
+                k--;
+            }
+			
+			// don't push if it is a leading 0
+            if (!ans.empty() or i != '0') ans.push(i);
+        }
+		
+		// pop from end if some k is left
+		// practically: pop the largest digits
+        while (k-- and !ans.empty()) ans.pop();        
+        
+		// nothing left
+		if (ans.empty()) return "0";
+        
+		// get the number from the digits in the stack (in reverse order)
+		// I have reused num to simply avoid an extra variable
+        const int n = ans.size();
+        while(!ans.empty()) {
+            num[ans.size()-1] = ans.top();
+            ans.pop();
+        }
+		
+		// return the substring updated in the previous step
+        return num.substr(0, n);
+    }
+};
