@@ -1,0 +1,26 @@
+/*
+Given two lists of closed intervals, each list of intervals is pairwise disjoint and in sorted order.
+Return the intersection of these two interval lists.
+
+Example 1:
+Input: A = [[0,2],[5,10],[13,23],[24,25]], B = [[1,5],[8,12],[15,24],[25,26]]
+Output: [[1,2],[5,5],[8,10],[15,23],[24,24],[25,25]]
+Reminder: The inputs and the desired output are lists of Interval objects, and not arrays or lists.
+
+*/
+
+class Solution {
+public:
+    vector<vector<int>> intervalIntersection(vector<vector<int>>& A, vector<vector<int>>& B) {
+        vector<vector<int>> v;
+        int i=0,j=0;
+        while(i<A.size() && j<B.size()){
+            int l=max(A[i][0], B[j][0]);
+            int u=min(A[i][1], B[j][1]);
+            if(l<=u) v.push_back({l,u});
+            if(A[i][1] < B[j][1])   i++;
+            else j++;
+        }
+        return v;
+    }
+};
